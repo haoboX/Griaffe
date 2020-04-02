@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Griaffe.dao.FavoriteMapper">
+             <insert id="insertFavorite" parameterType="Favorite">
+                insert into favorite(favorite_id,favorite_user,favorite_post)
+                values(#{favorite_id},#{favorite_user},#{favorite_post})
+             </insert>
+             <select id="queryFavorite" parameterType="Favorite" resultType="Favorite">
+                 select *
+                 from favorite
+                 <where>
+                       <if test="favorite_id != null and favorite_id !=0">
+                           and favorite_id = #{favorite_id}
+                       </if>
+                       <if test="favorite_user != null and favorite_user !=0">
+                           and favorite_user = #{favorite_user}
+                       </if>
+                       <if test="favorite_post != null and favorite_post !=0">
+                           and favorite_post = #{favorite_post}
+                       </if>
+                 </where>
+             </select>
+             <delete id="deleteFavorite" parameterType="Favorite">
+                delete from favorite
+                where  favorite_user= #{favorite_user} and favorite_post= #{favorite_post}
+             </delete>
+             <update id="updateFavorite" parameterType="Favorite">
+                 update favorite
+                 <set>
+                        <if test=" favorite_user !=null and favorite_user !=0">
+                               favorite_user=#{favorite_user},
+                        </if>
+                        <if test=" favorite_post !=null and favorite_post !=0">
+                               favorite_post=#{favorite_post}
+                        </if>        
+                 </set>
+                 where favorite_id=#{favorite_id}
+             </update>
+</mapper>

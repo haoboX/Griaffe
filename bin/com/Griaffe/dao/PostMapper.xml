@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Griaffe.dao.PostMapper">
+             <insert id="insertPost" parameterType="Post">
+                insert into post(post_id,post_name,post_user,post_image,post_praise_num,post_user_name,post_date)
+                values(#{post_id},#{post_name},#{post_user},#{post_image},#{post_praise_num},#{post_user_name},#{post_date})
+             </insert>
+             <select id="queryPost" parameterType="Post" resultType="Post">
+                 select *
+                 from post
+                 <where>
+                       <if test="post_id != null and post_id !=0">
+                           and post_id = #{post_id}
+                       </if>
+                       <if test="post_name != null and post_name !=''">
+                           and post_name = #{post_name}
+                       </if>
+                       <if test="post_user != null and post_user !=''">
+                           and post_user = #{post_user}
+                       </if>
+                        <if test="post_image != null and post_image !=''">
+                           and post_image = #{post_image}
+                       </if>
+                        <if test="post_praise_num != null and post_praise_num != 0">
+                           and post_praise_num = #{post_praise_num}
+                       </if>
+                 </where>
+             </select>
+             <select id="queryPostByTime" parameterType="Post" resultType="Post">
+                 select *
+                 from post
+                 order by post_id DESC
+             </select>
+             <select id="queryPostByPraiseNum" parameterType="Post" resultType="Post">
+                 select *
+                 from post
+                 order by post_praise_num DESC
+             </select>
+             <delete id="deletePost" parameterType="Post">
+                delete from post
+                where post_id= #{post_id}
+             </delete>
+             <update id="updatePost" parameterType="Post">
+                 update post
+                 <set>
+                       <if test="post_name != null and post_name !=''">
+                           post_name = #{post_name},
+                       </if>
+                       <if test="post_user != null and post_user !=''">
+                           post_user = #{post_user},
+                       </if>
+                       <if test=" post_praise_num != null and post_praise_num != 0">
+                           post_praise_num = #{post_praise_num},
+                       </if>
+                 </set>
+                 where post_id=#{post_id}
+             </update>
+             <update id="updatePostPraise" parameterType="Integer">
+                 update post set post_praise_num=post_praise_num+1
+                 where post_id=#{praise_post}
+             </update>
+             <select id="queryPostByPostId" parameterType="Integer" resultType="Post">
+                 select *
+                 from post where post_id = #{post_id}
+              
+             </select>
+</mapper>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Griaffe.dao.UserMapper">
+             <insert id="insertUser" parameterType="User">
+                insert into user( user_id,
+                				  user_name,
+                				  user_email,
+                				  user_phone,
+                				  user_password,
+                				  user_question,
+                				  user_answer,
+                				  user_state,
+                				  user_role)
+                values( #{user_id},
+                		#{user_name},
+                		#{user_email},
+                		#{user_phone},
+                		#{user_password},
+                		#{user_question},
+                		#{user_answer},
+                		#{user_state},
+                		#{user_role})
+             </insert>
+             <select id="queryUser" parameterType="User" resultType="User">
+                 select *
+                 from user
+                 <where>
+                       <if test="user_id != null and user_id !=0">
+                           and user_id = #{user_id}
+                       </if>
+                       <if test="user_name != null and user_name !=''">
+                           and user_name = #{user_name}
+                       </if>
+                       <if test="user_email != null and user_email !=''">
+                           and user_email = #{user_email}
+                       </if>
+                       <if test="user_phone != null and user_phone !=''">
+                           and user_phone = #{user_phone}
+                       </if>
+                        <if test="user_role != null and user_role !=''">
+                           and user_role = #{user_role}
+                       </if>
+                       <if test="user_state != null and user_state !=''">
+                           and user_state = #{user_state}
+                       </if>
+                 </where>
+             </select>
+             <delete id="deleteUser" parameterType="User">
+                delete from user
+                where user_id= #{user_id}
+             </delete>
+             <update id="updateUser" parameterType="User">
+                 update user
+                 <set>
+                       <if test="user_name != null and user_name !=''">
+                           user_name = #{user_name},
+                       </if>
+                       <if test="user_email != null and user_email !=''">
+                           user_email = #{user_email},
+                       </if>
+                       <if test="user_phone != null and user_phone !=''">
+                           user_phone = #{user_phone},
+                       </if>
+                       <if test="user_password != null and user_password !=''">
+                           user_password = #{user_password},
+                       </if>
+                       <if test="user_question != null and user_question !=''">
+                           user_question = #{user_question},
+                       </if>
+                       <if test="user_answer != null and user_answer !=''">
+                           user_answer = #{user_answer},
+                       </if>
+                       <if test="user_state != null and user_state != 0 ">
+                           user_state = #{user_state},
+                       </if>
+                 </set>
+                 where user_id=#{user_id}
+             </update>
+</mapper>

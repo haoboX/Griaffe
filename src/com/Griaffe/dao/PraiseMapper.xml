@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Griaffe.dao.PraiseMapper">
+             <insert id="insertPraise" parameterType="Praise">
+                insert into praise(praise_id,praise_post,praise_user)
+                values(#{praise_id},#{praise_post},#{praise_user})
+             </insert>
+             <select id="queryPraise" parameterType="Praise" resultType="Praise">
+                 select *
+                 from praise
+                 <where>
+                        <if test="praise_id != null and praise_id !=0">
+                           and praise_id = #{praise_id}
+                       </if>
+                       <if test="praise_post != null and praise_post !=''">
+                           and praise_post = #{praise_post}
+                       </if>
+                       <if test="praise_user != null and praise_user !=''">
+                           and praise_user = #{praise_user}
+                       </if>
+                 </where>
+             </select>
+             <delete id="deletePraise" parameterType="Praise">
+                delete from praise
+                where praise_id= #{praise_id}
+             </delete>
+             <update id="updatePraise" parameterType="Praise">
+                 update praise
+                 <set>
+                        <if test="praise_post != null and praise_post !=''">
+                            praise_post = #{praise_post},
+                       </if>
+                       <if test="praise_user != null and praise_user !=''">
+                            praise_user = #{praise_user},
+                       </if>
+                 </set>
+                 where praise_id=#{praise_id}
+             </update>
+</mapper>

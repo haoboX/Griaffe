@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Griaffe.dao.DarkroomMapper">
+             <insert id="insertDarkroom" parameterType="Darkroom">
+                insert into darkroom(dark_id,dark_user,dark_date)
+                values(#{dark_id},#{dark_user},#{dark_date})
+             </insert>
+             <select id="queryDarkroom" parameterType="Darkroom" resultType="Darkroom">
+                 select *
+                 from darkroom
+                 <where>
+                        <if test="dark_id != null and dark_id !=0">
+                           and dark_id = #{dark_id}
+                       </if>
+                       <if test="dark_user != null and dark_user !=''">
+                           and dark_user = #{dark_user}
+                       </if>
+                       
+                 </where>
+             </select>
+             <delete id="deleteDarkroom" parameterType="Darkroom">
+                delete from darkroom
+                where dark_id= #{dark_id}
+             </delete>
+             <update id="updateDarkroom" parameterType="Darkroom">
+                 update darkroom
+                 <set>
+                        <if test=" dark_user !=null and dark_user != 0 ">
+                               dark_user = #{dark_user},
+                        </if>
+                       <if test=" dark_date !=null and dark_date != 0 ">
+                               dark_date = #{dark_date},
+                        </if>
+                      
+                 </set>
+                 where dark_id=#{dark_id}
+             </update>
+</mapper>

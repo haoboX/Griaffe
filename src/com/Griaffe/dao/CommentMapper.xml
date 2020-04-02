@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Griaffe.dao.CommentMapper">
+             <insert id="insertComment" parameterType="Comment">
+                insert into comment(comment_id,comment_post,comment_user,comment_content,comment_user_name,comment_date)
+                values(#{comment_id},#{comment_post},#{comment_user},#{comment_content},#{comment_user_name},#{comment_date})
+             </insert>
+             <select id="queryComment" parameterType="Comment" resultType="Comment">
+                 select *
+                 from comment
+                 <where>
+                       <if test="comment_id != null and comment_id !=0">
+                           and comment_id = #{comment_id}
+                       </if>
+                       <if test="comment_user_name != null and comment_user_name !=''">
+                           and comment_user_name = #{comment_user_name}
+                       </if>
+                       <if test="comment_date != null and comment_date !=''">
+                           and comment_date = #{comment_date}
+                       </if>
+                       <if test="comment_user != null and comment_user !=0">
+                           and comment_user = #{comment_user}
+                       </if>
+                       <if test=" comment_post !=null and comment_post !=0">
+                           and comment_post=#{comment_post},
+                       </if>
+                       <if test=" comment_content !=null and comment_content !=''">
+                           and comment_content=#{comment_content}
+                       </if>
+                 </where>
+             </select>
+              <select id="selectCommentByPost_id" parameterType="Comment" resultType="Comment">
+                 select *
+                 from comment
+                 where comment_post=#{comment_post}
+             </select>
+             <delete id="deleteComment" parameterType="Comment">
+                delete from comment
+                where comment_id= #{comment_id}
+             </delete>
+             <update id="updateComment" parameterType="Comment">
+                 update comment
+                 <set>
+                        <if test=" comment_post !=null and comment_post !=0">
+                               comment_post=#{comment_post},
+                        </if>
+                        <if test=" comment_user !=null and comment_user !=0">
+                               comment_user=#{comment_user},
+                        </if>
+                        <if test=" comment_content !=null and comment_content !=''">
+                               comment_content=#{comment_content},
+                        </if>
+                        <if test="comment_user_name != null and comment_user_name !=''">
+                           	   comment_user_name = #{comment_user_name},
+                       	</if>
+                      	 <if test="comment_date != null and comment_date !=''">
+                               comment_date = #{comment_date},
+                       	</if>
+                        
+                 </set>
+                 where comment_id=#{comment_id}
+             </update>
+</mapper>
